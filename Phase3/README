@@ -1,0 +1,186 @@
+﻿================================================
+	       RISC-V  Simulator
+================================================
+
+Team - Akshat Goel | Aman Bilaiya | Bolu Sathwik Reddy |  Rohit Tuli  |  Ujjwal Yadav
+       2018CSB1067   2018CSB1069       2018CSB1081	  2018CSB1116    2018CSB1127
+
+Contributions:-
+
+__Everyone in the team have put lot of efforts for the completion of Phase1 and Phase2__
+  	And everyone has supported and helped eachother in their work. 
+
+Akshat 	 - Complete driver(decoding machine instructions and furthur handling), labels & directives handling
+	   ,PC_COUNTER and 5 step execution stages code.
+Aman     - Complete R format encoding(Phase 1) and execution. Error handling, readme and design doc.
+Sathwik  - Complete S, SB and U format encoding(Phase 1) and execution subroutine.
+Rohit    - Complete GUI and its integration with the source codes.
+Ujjwal   - Complete I and UJ format encoding(Phase 1) and execution subroutine.
+
+
+-------------------README-----------------------
+
+Phase 1 -- 32 bit RISC-V Assembler
+Phase 2 -- 5 Step instruction execution
+
+Table of contents
+1. File Structure     
+2. How to execute
+3. Software description 
+4. Test Results
+
+  FILE STRUCTURE:
+--------------------
+RISCV_SIMULATOR
+  |
+
+  |- include files
+      |- binary_to_decimal.py
+      |- converttomachinecode1.py
+      |- R_format.py | I_format.py | SSBU_format.py | UJ_format.py
+      |- R_phase2.py | I_phase2.py | SSBU_phase2.py
+      |- globalss.py
+      |- fetch1.py
+      |- decode1.py
+      |- execute1.py
+      |- memoryaccess1.py
+      |- registerupdate1.py
+      |- error_handling.py
+
+  |- Driver
+      |- driver.py
+      |- assembly.txt
+      |- machinecode.txt
+      |- simulator_front_end.py
+
+  |- examples.txt (Contains codes for testing purpose)
+      |- Count 1s
+      |- Bubbelsort
+      |- Fibonacci
+      |- Palindrome
+      |- Factorial
+      |-> The above programs are working corrently.
+
+HOW TO EXECUTE
+--------------
+	$cd CS204-Project
+	$run "simulator_front_end.py" in Terminal/Python IDE
+	$GUI will open (Enter the code into the editor then press run) 
+ 
+-> The GUI for RISC V simulation is created using python Tkinter library. It has following units:-
+   - Text editor(enter code here)(leftmost block)
+   - Press "Simulate" button to save code into "assembly.txt" file and then instructions will be 
+     encoded to machine code in "machinecode.txt" file and will be displayed. 
+   - Now press the "run" button to see the OUTPUT of the program.(Register and memory values gets updated)
+   - One can display Registers, Memory in Decimal, binary, Hex & ASCII. By using "choose base" drop down menu.
+   - Also one can peek into memory and stack data using "Jump to" drop down menu.
+   - One can dump the code using "dump" button, the program will exit and register, memory and stack values
+     will be stored in "store.txt" file. 
+   - Appropriate error will be displayed onto the IDE/Terminal console if any unsupported instructions or 
+     invalid format is there in code.
+   - Currently step, Previous and breakpoint buttons are functionless.(We will add this functionality by Phase 3)
+
+-> "examples.txt" file has some RISC V codes for testing purpose. Copy them into the editor pane
+   and simulate. Correct outputs of these programs is present at the end of this readme file.
+   Restart the application each time to run new RISC V program.
+
+      
+SOFTWARE DESCRIPTION:      
+---------------------
+
+            +------------------------------------------------+
+            |                                                |
+            |   FUNCTIONAL_SIMULATOR_FOR_32bit_RISCV_ISA     |
+            |                                                |
+            +------------------------------------------------+
+
+
+  RISC-V 32bit ISA
+ +----------------+
+
+-> The assembly language supports 31 instructions
+    - Arithmetic Instructions (add, sub, mul, div, rem, addi)
+    - Logical instructions (and, or, xor, andi, ori)
+    - Shift Instructions (sll, slt, sra, srl)
+    - Data Transfer Instructions (sb, sw, sd, sh, lb, lh, lw)
+    - Load Instructions (auipc, lui)
+    - Unconditional Branch Instruction (jal, jalr)
+    - Conditional Branch Instructions (beq, bne, bge, blt)
+
+-> In addition, it provide support for the assembler directives: .text, .data, .byte, .half, .word, .asciiz.
+
+-> - Floating point operations and pseudo instructions are not supported. Also "lw x1 var1" is not supported.
+   - Only instuction without commas are supported .Eg:- "addi x1 x3 10" | "sw x3 0(x1)" | "lw x1 0(x3)"
+   - No empty lines and comments/commas should be there in assembly code.
+   - For stack pointer use "addi x2 x2 -12". Don't code it as sp.
+   - Use of x2 is restricted to stack pointer only.
+  (We will try to overcome these limitations by the time of 3rd phase submission.) 
+
+4. Provision to choose text/data/stack/heap segments of the memory. Also, provi-
+sion to enter an address of interest directly so that display moves to that point for convenience of the user.
+
+-> Along with execution of instruction in steps, simulator also provide messages
+   what it is doing in each stage as an update in all the structures that would change.
+
+-> Furthur it has a “clock” that increments once for every instruction.
+
+-> Simulator assumes that we have only 32 registers(x0,x1.....x31)
+    - Register x2 is the stack pointer.
+    - Remaining registers are the general purpose registers.
+    - Register x1 is the return address
+    - Each memory and register can hold value upto 10^9 (To increase range we can use numpy arrays).
+
+-> Memory size and stack size is set to 1000 bytes (can modify) and each location is intialized 
+   to -1 unlike in Venus is with 0.
+
+-> Each instruction is encoded into a 32 bit value as per official documentation.
+
+-> The memory is a large list of bytes. A part of it saves the 
+   instructions and the rest of it is devoted to store the data.
+     
+-> Each RISC-V instruction is be divided in 6 instruction formats:
+   R-format | I-format | S-format | SB-format | U-format | UJ-format 
+
+
+  Simulator for RISC processor
+ +----------------------------------+
+
+ -> Our Simulator is computer program written in a python3 language that simulates the 
+    working of the Simple RISC processor that run over the 32 bit RISCV ISA.
+ -> The program takes the assembly instructions from the "assemlby.txt" file.
+ -> Then the assembly code is converted into machine code and writes it into "machinecode.txt".
+ -> Finally the 5 step insruction execution is done for each machine instruction.
+     - fetch():   • Get the instruction into the pipeline, using a PC.
+	          • Increment PC.
+     - decode():  • What’s the instruction? -> Arithmetic/Load-Store/Branch-Jump
+	          • Identify the registers - source and destination.
+		  • What to do with Branch?
+     - execute(): • ALU operations
+	 	  • Effective address calculation for Load-Store
+		  • Branch gets resolved
+     - memoryaccess():  Read/Write data from/to memory_array
+     - registerupdate(): Writes the results back to register file
+
+
+
+TEST RESULTS:
+-------------
+1. Count 1s
+    Count number of ones in binary rep of a number(var1) and stores in x12.    
+
+2. Bubblesort  (Recursive)
+    Sorts an array stored in memory
+    
+3. Fibonacci  (Recursive)
+    Calculates nth [x5=10] fibonaaci number into x7.
+
+4. Palindrome
+   Determines whether the string is palindrome or not . If YES x8=1 else x8=0.
+    
+5. Factorial (Recursive)
+    Calculates factorial of 5(x10) into x10.
+    
+
+    
+
+

@@ -1,0 +1,108 @@
+﻿================================================
+	       RISC-V  Simulator (Phase 3)
+================================================
+
+Languages:- Python3 , Python Tkinter
+
+Team - Akshat Goel | Aman Bilaiya | Bolu Sathwik Reddy |  Rohit Tuli  |  Ujjwal Yadav
+       2018CSB1067   2018CSB1069       2018CSB1081	  2018CSB1116    2018CSB1127
+
+Contributions:-
+
+__Everyone in the team have put lot of efforts for the completion of Phase3__
+  	And everyone has supported and helped eachother in their work. 
+
+As dependencies were more in this phase,so we worked in group of two.
+
+::Akshat and Ujjwal::
+- Build upon phase2 source codes and made it pipelined 
+     - with dataforwarding
+     - without dataforwarding but stalling
+- Included inter-state pipeline buffer registers 
+- Changed the data path and control path to support pipelining
+- Included control and data hazards detection unit
+- Included data forwarding logic , stall logic
+- Included functionality to print register and pipeline buffers
+
+::Sathwik and Aman::
+- Implemented 1 bit branch predictor
+- Changed the data path and control path to support branch prediction
+- Created branch prediction hardware (BHT + BTB indexed using PC)
+- Included branch prediction logic and BTB updation
+- Included flush logic (on a miss)
+- Included input knobs to support different modes
+
+::Rohit::    
+- Upgraded GUI to include functionalities required and its integration with the source codes.
+- Included STEP button to simulate instructions step-wise 
+- Included options to simulate RISC-V code on different modes 
+- Included block diagram of the 5 pipeline stages
+- Displayed stats of the program and instruction execution details
+
+
+-------------------README2-----------------------
+
+For Phase 1 & 2 details : refer README file
+
+Table of contents
+1. File Structure     
+2. How to run
+3. Features
+
+FILE STRUCTURE:
+----------------
+RISCV_SIMULATOR
+  |
+
+  |- include files
+      |- execute0.py | execute1.py | execute2.py
+      |- fetch0.py | fetch1.py
+
+  |- Driver
+      |- MAIN.py
+      |- unpipelined.py
+      |- stall_no_dataforwarding.py
+      |- stalling_dataforwarding.py
+      |- predictor.py
+      |- simulator_front_end.py
+      |- driver_step.py
+   
+
+HOW TO RUN:
+-----------
+	/RISC_SIMULATOR/Phase3
+        On the terminal :-   cmd$ python3 "MAIN.py"
+			     Enter 1 to open GUI and 2 to continue in terminal
+
+	/RISC_SIMULATOR/with GUI
+        - run python3 "simulator_front_end.py"        
+	On the GUI:-  Enter the code in editor pane and simulate 
+        
+
+FEATURES:
+---------
+    Functionality to switch modes
+        1. Non- pipelined
+        2. Pipelined with stalls
+        3. Pipelined with Data forwarding
+	4. Enable 1 bit Predictor
+    
+    Functionality to output register values and values of the inter state buffers
+
+    Functionality to see inter state buffer register values of a particular instruction (of user choice)
+
+    Showes the number of mispredictions, number of stalls, and other stats
+
+    Functionality to print register values and inter state buffers after every cycle.
+
+    GUI :- Used Python Tkinter Library
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+Fetch has been done in cycle number 21
+[]
+Decode has been done in cycle number 22
+[2, 2, -1, -8, 'I_1', 'addi']
+Execute has been done in cycle number 23
+[2, 2, -1, -8, 'I_1', 'addi', -16]
+ Memory access has been done in cycle number 24
+[2, 2, -1, -8, 'I_1', 'addi', -16, -1]
+Memory access has been done in cycle number 25
+Instruction has been completely executed and moved out of pipeline
